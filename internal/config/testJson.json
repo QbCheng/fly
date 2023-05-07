@@ -1,0 +1,39 @@
+{
+  "app_name": "luckyshake",
+  "app_id": 4,
+  "server_id" : "4.1.1.1",
+  "client_version": "1.0.0",
+  "development": 1,
+  "router": {
+    "zookeeper_addr": "192.168.1.170:2181",
+    "bus_addr": "nats://192.168.1.170:4222/"
+  },
+  "log_collector": {
+    "kafka_addr": "192.168.1.170:9092",
+    "kafka_game_log_topic": "luckyshake_log_topic",
+    "kafka_game_log_consumer_group_name": "luckyshake_log_consumer_group"
+  },
+  "redis" : [
+    {
+      "name": "account",
+      "Addr": "192.168.1.170:6379",
+      "password" : "simpleChenBin",
+      "db":  0,
+      "pool_size": 20,
+      "min_idle_connects": 5,
+      "idle_timeout":  "3m",
+      "max_retries": 10,
+      "min_retry_backoff": "16ms",
+      "max_retry_backoff": "512ms",
+      "dial_timeout": "30s",
+      "read_timeout": "30s",
+      "write_timeout": "30s",
+      "cluster_client": 0
+    }
+  ],
+  "conn_server": {
+    "listen_port" : "53200",
+    "conn_typ": 2,
+    "metadata_conn_addr" : "192.168.1.170:53200"
+  }
+}
