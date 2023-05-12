@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	kReadBufSize = 1024 * 10 // 10kB
+	kReadBufSize = 1024 * 1024 // 1MB
 )
 
 type IPacketInfo interface {

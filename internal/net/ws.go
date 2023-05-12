@@ -5,7 +5,6 @@ import (
 	"github.com/gorilla/websocket"
 	"go.uber.org/atomic"
 	"net/http"
-	_ "net/http/pprof"
 	"runtime"
 	"strings"
 	"sync"
@@ -157,7 +156,7 @@ func (s *WebsocketSvr) setRemoteAddr(localConn *wsConn, r *http.Request) {
 
 // Run 启动 Websocket server
 func (s *WebsocketSvr) Run() error {
-	http.HandleFunc(s.config.Pattern, func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc(s.config.Websocket.Pattern, func(w http.ResponseWriter, r *http.Request) {
 		// 将 HTTP 连接 提升 到 Websocket
 		nativeConn, err := s.upgrade.Upgrade(w, r, nil)
 		if err != nil {
@@ -186,7 +185,7 @@ func (s *WebsocketSvr) Run() error {
 
 	// 监听
 	go func() {
-		if s.config.CertFile == "" || s.config.KeyFile == "" {
+		if s.config.TLS.CertFile == "" || s.config.TLS.KeyFile == "" {
 			// ws
 			s.info("WebSocket Listening on : ws://%s/ws", s.server.Addr)
 			err := s.server.ListenAndServe()
@@ -197,7 +196,7 @@ func (s *WebsocketSvr) Run() error {
 		} else {
 			// wss
 			s.info("WebSocket Listening on : wss://%s/ws", s.server.Addr)
-			err := s.server.ListenAndServeTLS(s.config.CertFile, s.config.KeyFile)
+			err := s.server.ListenAndServeTLS(s.config.TLS.CertFile, s.config.TLS.KeyFile)
 			if err != nil {
 				s.error("WebSocket Failed to listen. {err : %s}", err)
 				return

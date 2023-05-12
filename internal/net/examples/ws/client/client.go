@@ -59,7 +59,7 @@ func loadCA(caFile string) *x509.CertPool {
 }
 
 func main() {
-	conn, err := createWsClient("192.168.1.170:80")
+	conn, err := createWsClient("192.168.1.6:18888")
 	if err != nil {
 		panic(err)
 	}
